@@ -9,19 +9,15 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import com.example.practica02_definitiva_jesus.Data.Student
-import com.example.practica02_definitiva_jesus.Data.Tutor
+import com.example.practica02_definitiva_jesus.data.Student
+import com.example.practica02_definitiva_jesus.data.Tutor
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-private lateinit var calendarUser:ImageButton
+class StudentFragment : Fragment() {
 
-
-private const val ARG_OBJECT = "object"
-class DemoObjectFragment : Fragment() {
-
+    private val ARG_PARAM1 = "param1"
+    private val ARG_PARAM2 = "param2"
+    private lateinit var calendarUser: ImageButton
+    private val ARG_OBJECT = "object"
     private var imageUserView: ImageView? = null
     private var nameUserView: TextView? = null
     private var surnameUserView: TextView? = null
@@ -30,12 +26,31 @@ class DemoObjectFragment : Fragment() {
     private var centerUserView: TextView? = null
     private var tutorUserView: TextView? = null
 
-
-
     val StudentList = listOf(
-        Student("Jesus Miguel", "Perez Rico", "jesusmi.perez@alten.es","IES Martinez Montañes", "Sevilla",R.drawable.icon_user),
-        Student("Daniel", "Jimenez", "dani.jimenez@alten.es","IES Alcores", "Huelva",R.drawable.icon_user),
-        Student("Alfredo", "Martin" , "alfre.martin@alten.es","IES Blas Infante", "Malaga", R.drawable.icon_user)
+        Student(
+            "Jesus Miguel",
+            "Perez Rico",
+            "jesusmi.perez@alten.es",
+            "IES Martinez Montañes",
+            "Sevilla",
+            R.drawable.icon_user
+        ),
+        Student(
+            "Daniel",
+            "Jimenez",
+            "dani.jimenez@alten.es",
+            "IES Alcores",
+            "Huelva",
+            R.drawable.icon_user
+        ),
+        Student(
+            "Alfredo",
+            "Martin",
+            "alfre.martin@alten.es",
+            "IES Blas Infante",
+            "Malaga",
+            R.drawable.icon_user
+        )
     )
 
     val TutorList = listOf(
@@ -54,8 +69,6 @@ class DemoObjectFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
-
-
     }
 
     override fun onCreateView(
@@ -70,55 +83,41 @@ class DemoObjectFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         arguments?.takeIf { it.containsKey(ARG_OBJECT) }?.apply {
 
+            bindViews()
 
-            val student= StudentList[getInt(ARG_OBJECT)]
-            imageUserView = view.findViewById(R.id.imageUser)
+            val student = StudentList[getInt(ARG_OBJECT)]
+
             student?.imageUser?.let { imageUserView?.setImageResource(it) }
-
-            nameUserView = view.findViewById(R.id.nameUser)
-            nameUserView?.text = student.nombre
-
-            surnameUserView = view.findViewById(R.id.surnameUser)
-            surnameUserView?.text = student.apellidos
-
-            emailUserView = view.findViewById(R.id.emailUser)
+            nameUserView?.text = student.name
+            surnameUserView?.text = student.surname
             emailUserView?.text = student.email
+            cityUserView?.text = student.city
+            centerUserView?.text = student.center
 
-            cityUserView = view.findViewById(R.id.cityUser)
-            cityUserView?.text = student.ciudad
+            val tutor = TutorList[getInt(ARG_OBJECT)]
+            val tutorname = tutor.name
+            val tutorsurname = tutor.surname
+            tutorUserView?.text = tutorname + " " + tutorsurname
 
-            centerUserView = view.findViewById(R.id.centerUser)
-            centerUserView?.text = student.centro
-
-
-
-
-            val tutor= TutorList[getInt(ARG_OBJECT)]
-            tutorUserView = view.findViewById(R.id.tutorUser)
-            val tutorname= tutor.nombre
-            val tutorsurname=tutor.apellidos
-            tutorUserView?.text = tutorname+" "+ tutorsurname
-
-
-            calendarUser=view.findViewById(R.id.calendarUser)
-
-
+            calendarUser = view.findViewById(R.id.calendarUser)
 
             calendarUser.setOnClickListener {
-
-                val intent = Intent(activity,AttendanceActivity::class.java)
-                intent.putExtra("student",student)
+                val intent = Intent(activity, AttendanceActivity::class.java)
+                intent.putExtra("student", student)
                 startActivity(intent)
-
             }
-
-
         }
-
     }
 
-
-
+    private fun bindViews(){
+        imageUserView = view?.findViewById(R.id.imageUser)
+        nameUserView = view?.findViewById(R.id.nameUser)
+        surnameUserView = view?.findViewById(R.id.surnameUser)
+        emailUserView = view?.findViewById(R.id.emailUser)
+        cityUserView = view?.findViewById(R.id.cityUser)
+        centerUserView = view?.findViewById(R.id.centerUser)
+        tutorUserView = view?.findViewById(R.id.tutorUser)
+    }
 
     companion object {
         /**
@@ -132,7 +131,7 @@ class DemoObjectFragment : Fragment() {
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            DemoObjectFragment().apply {
+            StudentFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

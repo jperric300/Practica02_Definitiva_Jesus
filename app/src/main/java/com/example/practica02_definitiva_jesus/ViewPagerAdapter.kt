@@ -1,10 +1,8 @@
 import android.os.Bundle
-import android.provider.Settings.Global.putInt
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.practica02_definitiva_jesus.Data.Student
-import com.example.practica02_definitiva_jesus.DemoObjectFragment
+import com.example.practica02_definitiva_jesus.StudentFragment
 
 
 class ViewPagerAdapter(fa: FragmentActivity): FragmentStateAdapter(fa){
@@ -16,12 +14,10 @@ class ViewPagerAdapter(fa: FragmentActivity): FragmentStateAdapter(fa){
     override  fun getItemCount(): Int = 3
 
     override fun createFragment(position: Int): Fragment {
-        val fragment = DemoObjectFragment()
+        val fragment = StudentFragment()
         fragment.arguments = Bundle().apply {
             putInt(ARG_OBJECT, position)
-
         }
         return  fragment
     }
-
 }
